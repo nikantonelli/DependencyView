@@ -1,9 +1,8 @@
-Mind Mapping your Strategy
-===================
+Dependency Visualisation
+========================
 
 ## Overview
 
-An attempt at a mind map style approach to crafting a strategy.
+Dependency view with the thin end at the predecessor and the fat end at the successor
 
-First though, we have added the ability to show dependencies
-![alt text](https://github.com/nikantonelli/ForceDiagram/blob/master/Images/Spaghetti.png)
+![alt text](https://github.com/nikantonelli/DependencyView/blob/master/Images/Spaghetti.png)
