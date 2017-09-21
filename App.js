@@ -96,7 +96,8 @@ Ext.define('Rally.app.DependencyView.app', {
     ],
 
     onSettingsUpdate: function() {
-        gApp._redrawTree();
+        debugger;
+        gApp._refreshTree();
     },
 
     getSettingsFields: function() {
@@ -174,8 +175,8 @@ Ext.define('Rally.app.DependencyView.app', {
         //Get all the nodes and the "Unknown" parent virtual nodes
         var nodetree = gApp._createTree(gApp._nodes);
         gApp._nodeTree = nodetree;
-        // var viewBox = [ 0, 0, 1200, 1200 ];
-        // gApp._setViewBox(viewBox);
+        var viewBox = [ 0, 0, 1200, 1200 ];
+        gApp._setViewBox(viewBox);
         gApp._refreshTree();    //Need to redraw if things are added
     },
 
@@ -183,13 +184,14 @@ Ext.define('Rally.app.DependencyView.app', {
     _typeSizeMax: 0,
     _storyStates: [],
 
-    _resizeEvent: function(obj, width, height, owidth, oheight, opts) {
+    _resizeEvent: function(width, height) {
         gApp._setViewBox( [0,0,width, height]);
+        gApp._redrawTree();
     },
     //Entry point after creation of render box
     _onElementValid: function(rs) {
 
-        gApp.on('resize', gApp._resizeEvent);
+        Ext.EventManager.onWindowResize(gApp._resizeEvent);
         gApp._typeSizeStore = Ext.create('Rally.data.wsapi.Store',        
             {
                 itemId: 'typeSizeStore',
@@ -359,7 +361,7 @@ Ext.define('Rally.app.DependencyView.app', {
     view: null,
     
     _setViewBox: function(viewBox) {
-        var displayBox = [ 1200, 1200];
+        var displayBox = [ 1200, 900];
         var rs = this.down('#rootSurface');
         rs.getEl().setWidth(displayBox[0]);
         rs.getEl().setHeight(displayBox[1]);            
@@ -438,8 +440,8 @@ Ext.define('Rally.app.DependencyView.app', {
                 };
                 predecessors = d.data.record.getCollection('Predecessors').load( collectionConfig);
             }
-
         });
+        gApp._tick();
     },
 
     _tick: function() {
